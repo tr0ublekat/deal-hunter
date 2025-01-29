@@ -314,6 +314,7 @@ async def fetch_product_price(url: str):
         return None, None
 
 async def check_prices_periodically():
+    print("Попытка получить обновленные цены!")
     while True:
         try:
             async with async_session() as session:
@@ -329,6 +330,7 @@ async def check_prices_periodically():
 
                     # Если цена изменилась, уведомляем пользователя
                     if float(new_price) != product.price:
+                        print(f"Цена на продукт {product.name} изменилась!")
                         user_result = await session.execute(select(User).where(User.id == product.user_id))
                         user = user_result.scalar()
 
